@@ -1,10 +1,15 @@
 // store.ts
 
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore} from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
-
+import { VehicleAPI } from '../Features/Vehicles/VehicleAPI';
 import userProfileReducer from '../Features/UserProfile/userProfileSlice';
+import { bookingAPI } from '../Features/Booking/BookingAPI';
+import { userAPI } from '../Features/Users/userAPI';
+import { allvehiclespcisAPI } from '../Features/AdminVehicles/allvehiclespcisAPI';
+import { ticketAPI } from '../Features/Tickets/ticketAPI';
+
 
 // Configure persist options
 const persistConfig = {
@@ -12,15 +17,20 @@ const persistConfig = {
   storage, // Storage method (localStorage by default)
 };
 
-// Create a persisted reducer
-export const persistedReducer = persistReducer(persistConfig, userProfileReducer);
+export const persistedReducer = persistReducer(persistConfig, userProfileReducer );
 
 // Configure store with persisted reducer
-const store = configureStore({
+ const store = configureStore({
   reducer: {
-    userProfile: persistedReducer, // Reducer with persistence
-    // other reducers if any
+    userProfile: persistedReducer, 
+  [VehicleAPI.reducerPath]:VehicleAPI.reducer,
+  [bookingAPI.reducerPath]:bookingAPI.reducer,
+  [userAPI.reducerPath]:userAPI.reducer,
+  [allvehiclespcisAPI.reducerPath]:allvehiclespcisAPI.reducer,
+  [ticketAPI.reducerPath]:ticketAPI.reducer
   },
+  middleware: (getdefaultMiddleware)=>
+  getdefaultMiddleware().concat(VehicleAPI.middleware, bookingAPI.middleware,userAPI.middleware,allvehiclespcisAPI.middleware, ticketAPI.middleware),
 });
 
 // Create a persisted store

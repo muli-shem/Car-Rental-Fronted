@@ -10,6 +10,13 @@ import ExploreFleet from './Fleet/ExploreFleet'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Login  from './pages/Login'
 import Profile from './Features/UserProfile/Profile'
+import VehicleList from './Features/Vehicles/Vehicles'
+import Admindashboard from './pages/Admindashboard'
+import UserTable from './Features/Users/User'
+import BookingTable from './Features/Booking/BookingsTable'
+import VehicleTable from './Features/AdminVehicles/Vehiclespcis'
+import TicketTable from './Features/Tickets/Tickets'
+
 
 function App() {
  
@@ -48,16 +55,38 @@ function App() {
   {
       path: '/dashboard/userprofile',element:<Profile/>,
       
+     },{
+      path:'/dashboard/vehicles', element:<VehicleList/>
      },
+     {
+      path:'/dashboard/bookings', element:<BookingTable/>
+     },
+     {
+      path:'/dashboard/tickets',element:<TicketTable/>
+    }
+    ]
+    },
+    {
+      path:'/admindashboard', element:<Admindashboard/>,
+      errorElement:<Error/>,
+      children:[
+        {
+        path:'/admindashboard/users', element:<UserTable/>,
+      },
+      {
+        path:'/admindashboard/dashboard', element:<VehicleList/>,
+      },
+      {
+        path:'/admindashboard/allvehicles', element:<VehicleTable/>,
+      },
+   
     ]
     },
     {
       path: '/fleet', element:<ExploreFleet/>,
       errorElement:<Error/>
     },
-  
-     
-     
+
     ])
   return (
     <RouterProvider router={router}/>

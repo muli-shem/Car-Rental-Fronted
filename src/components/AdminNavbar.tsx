@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const UserNavbar: React.FC = () => {
+const AdminNavbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -77,7 +77,7 @@ const UserNavbar: React.FC = () => {
                   to="/dashboard/userprofile"
                   className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
-                 Tickets
+                  Users
                 </Link>
                       <Link
                   to="/"
@@ -92,7 +92,7 @@ const UserNavbar: React.FC = () => {
                   Vehicles
                 </Link>
                 <Link
-                  to="/dashboard/"
+                  to="/"
                   className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
                   Payments
@@ -230,4 +230,4 @@ const UserNavbar: React.FC = () => {
   );
 };
 
-export default UserNavbar;
+export default AdminNavbar;

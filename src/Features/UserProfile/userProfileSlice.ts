@@ -2,9 +2,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export interface UserProfile {
-  fullName: string;
+  Full_name: string;
   email: string;
-  contactPhone: string;
+  contact_phone: string;
   address: string;
 }
 
@@ -26,9 +26,10 @@ export const fetchUserProfile = createAsyncThunk<UserProfile, void, { rejectValu
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token'); // Adjust based on how you store the token
-      const response = await axios.get<UserProfile>('http://localhost:8080/api/Users', {
+      const user_id = localStorage.getItem('user_id');
+      const response = await axios.get<UserProfile>(`http://localhost:8080/api/Users/${user_id}`, {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `${token}`
         }
       });
       return response.data;
@@ -44,7 +45,8 @@ export const updateUserProfile = createAsyncThunk<UserProfile, UserProfile, { re
   async (updatedProfile, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token'); // Adjust based on how you store the token
-      const response = await axios.put<UserProfile>('http://localhost:8080/api/Users', updatedProfile, {
+      const user_id = localStorage.getItem('user_id')
+      const response = await axios.put<UserProfile>(`http://localhost:8080/api/Users/${user_id}`, updatedProfile, {
         headers: {
           Authorization: `Bearer ${token}`
         }

@@ -1,31 +1,34 @@
-import  { useState, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
+import { useState, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 export default function Login() {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/api/login', {
+      const response = await axios.post("http://localhost:8080/api/login", {
         email,
         password,
       });
 
       if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        navigate('/dashboard');
+        localStorage.setItem("token", response.data.token),
+          localStorage.setItem("user_id", response.data.user.user_id as string);
+
+        response.data.user.role === "admin" && navigate("/admindashboard/users");
+        response.data.user.role === "user" && navigate("/dashboard/vehicles");
       } else {
-        setError('Invalid email or password');
+        setError("Invalid email or password");
       }
     } catch (err) {
-      setError('Error logging in. Please try again.');
+      setError("Error logging in. Please try again.");
     }
   };
 
@@ -111,7 +114,7 @@ export default function Login() {
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{' '}
+            Not a member?{" "}
             <a
               href="#"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"

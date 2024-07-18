@@ -5,9 +5,9 @@ import { RootState, AppDispatch } from '../../app/Store'; // Adjust according to
 import { UserProfile } from '../UserProfile/userProfileSlice'; // Adjust path as per your project structure
 
 const Profile = () => {
-  const [fullName, setFullName] = useState('');
+  const [Full_name, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const [contactPhone, setContactPhone] = useState('');
+  const [contact_phone, setContactPhone] = useState('');
   const [address, setAddress] = useState('');
   const [error, setError] = useState<string>(''); // Specify error state type
   const [editing, setEditing] = useState(false); // New state to handle editing
@@ -22,9 +22,9 @@ const Profile = () => {
   useEffect(() => {
     // Set form fields with userProfile data on userProfile.data change
     if (userProfile.data) {
-      setFullName(userProfile.data.fullName);
+      setFullName(userProfile.data.Full_name);
       setEmail(userProfile.data.email);
-      setContactPhone(userProfile.data.contactPhone);
+      setContactPhone(userProfile.data.contact_phone);
       setAddress(userProfile.data.address);
     }
   }, [userProfile.data]); // userProfile.data dependency to update form fields
@@ -35,9 +35,9 @@ const Profile = () => {
       // Dispatch updateUserProfile with updated profile data
       await dispatch(
         updateUserProfile({
-          fullName,
+          Full_name,
           email,
-          contactPhone,
+          contact_phone,
           address,
         } as UserProfile) // Assert as UserProfile to ensure correct payload type
       );
@@ -64,7 +64,7 @@ const Profile = () => {
                 name="full-name"
                 type="text"
                 required
-                value={fullName}
+                value={Full_name}
                 onChange={(e) => setFullName(e.target.value)}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Full Name"
@@ -94,7 +94,7 @@ const Profile = () => {
                 name="contact-phone"
                 type="text"
                 required
-                value={contactPhone}
+                value={contact_phone}
                 onChange={(e) => setContactPhone(e.target.value)}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Contact Number"
@@ -135,13 +135,13 @@ const Profile = () => {
         ) : (
           <div>
             <div>
-              <p className="text-sm font-medium text-gray-700">Full Name: {userProfile.data?.fullName}</p>
+              <p className="text-sm font-medium text-gray-700">Full Name: {userProfile.data?.Full_name}</p>
             </div>
             <div>
               <p className="text-sm font-medium text-gray-700">Email: {userProfile.data?.email}</p>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-700">Contact Number: {userProfile.data?.contactPhone}</p>
+              <p className="text-sm font-medium text-gray-700">Contact Number: {userProfile.data?.contact_phone}</p>
             </div>
             <div>
               <p className="text-sm font-medium text-gray-700">Address: {userProfile.data?.address}</p>
