@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export interface TBookings {
   booking_id: number;
+  location_id:number;
   booking_date: string;
   return_date: string;
   total_amount: number;
@@ -63,5 +64,5 @@ export const {
   useUpdateBookingMutation:()=>ReturnType<typeof bookingAPI.endpoints.updateBooking.useMutation>
   useDeleteBookingMutation:()=>ReturnType<typeof bookingAPI.endpoints.deleteBooking.useMutation>
   useGetoneBookQuery: (UserId: number, options?: { pollingInterval?: number }) => ReturnType<typeof bookingAPI.endpoints.getoneBook.useQuery>;
-  //useCreateBookingMutation: (UserId: number, options?: { pollingInterval?: number }) => ReturnType<typeof bookingAPI.endpoints.createBooking.useMutation>;
+ 
 }

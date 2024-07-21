@@ -1,0 +1,1 @@
+export const LocalDomain= 'http://localhost:8080/api/'

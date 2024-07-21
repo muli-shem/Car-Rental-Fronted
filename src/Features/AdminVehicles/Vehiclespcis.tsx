@@ -13,6 +13,7 @@ const VehicleTable = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const handleUpdate = async (vehicle: Partial<Vehicle>) => {
+   
     try {
       await updateVehicle(vehicle).unwrap();
       toast.success('Vehicle updated successfully');

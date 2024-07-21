@@ -17,6 +17,8 @@ import BookingTable from './Features/Booking/BookingsTable'
 import VehicleTable from './Features/AdminVehicles/Vehiclespcis'
 import TicketTable from './Features/Tickets/Tickets'
 
+import BookingFormWrapper from './Features/BookCard/VehicleCard'
+
 
 function App() {
  
@@ -63,6 +65,8 @@ function App() {
      },
      {
       path:'/dashboard/tickets',element:<TicketTable/>
+    },{
+      path:'/dashboard/bookform', element:<BookingFormWrapper/>,
     }
     ]
     },

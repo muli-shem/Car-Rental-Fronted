@@ -16,6 +16,7 @@ export interface TVehicleSpecifications {
 // Define the type for a single vehicle
 export interface TVehicle {
   id: number;
+  vehicle_id:number;
   rental_rate: number;
   availability: boolean;
   VehicleSpecifications: TVehicleSpecifications;

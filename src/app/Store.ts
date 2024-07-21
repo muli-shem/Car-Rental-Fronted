@@ -9,6 +9,7 @@ import { bookingAPI } from '../Features/Booking/BookingAPI';
 import { userAPI } from '../Features/Users/userAPI';
 import { allvehiclespcisAPI } from '../Features/AdminVehicles/allvehiclespcisAPI';
 import { ticketAPI } from '../Features/Tickets/ticketAPI';
+import { bookingsAPI, paymentAPI } from '../Features/BookCard/bookingsAPI';
 
 
 // Configure persist options
@@ -27,10 +28,12 @@ export const persistedReducer = persistReducer(persistConfig, userProfileReducer
   [bookingAPI.reducerPath]:bookingAPI.reducer,
   [userAPI.reducerPath]:userAPI.reducer,
   [allvehiclespcisAPI.reducerPath]:allvehiclespcisAPI.reducer,
-  [ticketAPI.reducerPath]:ticketAPI.reducer
+  [ticketAPI.reducerPath]:ticketAPI.reducer,
+  [bookingsAPI.reducerPath]: bookingsAPI.reducer,
+  [paymentAPI.reducerPath]:paymentAPI.reducer
   },
   middleware: (getdefaultMiddleware)=>
-  getdefaultMiddleware().concat(VehicleAPI.middleware, bookingAPI.middleware,userAPI.middleware,allvehiclespcisAPI.middleware, ticketAPI.middleware),
+  getdefaultMiddleware().concat(VehicleAPI.middleware, bookingAPI.middleware,userAPI.middleware,allvehiclespcisAPI.middleware, ticketAPI.middleware,paymentAPI.middleware, bookingsAPI.middleware),
 });
 
 // Create a persisted store

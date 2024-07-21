@@ -1,13 +1,13 @@
-
 import { Link, Outlet } from "react-router-dom";
 import AdminNavbar from "../components/AdminNavbar";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUsers, faBook, faCar, faSignOutAlt, faTicketAlt, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function Admindashboard() {
   return (
     <div className="flex flex-col h-screen">
       <div className="fixed top-0 left-0 right-0 z-10">
-        <AdminNavbar/>
+        <AdminNavbar />
       </div>
       <div className="flex flex-grow">
         <div className="flex flex-col w-64 bg-indigo-800 fixed top-16 bottom-0">
@@ -20,31 +20,43 @@ export default function Admindashboard() {
                 to="/admindashboard/users"
                 className="group flex items-center px-2 py-2 text-sm font-medium text-white rounded-md hover:bg-indigo-600"
               >
+                <FontAwesomeIcon icon={faUsers} className="mr-2" />
                 Users
               </Link>
               <Link
                 to="/admindashboard/allbookings"
                 className="group flex items-center px-2 py-2 text-sm font-medium text-white rounded-md hover:bg-indigo-600"
               >
-                Booking
+                <FontAwesomeIcon icon={faBook} className="mr-2" />
+                Bookings
               </Link>
               <Link
                 to="/admindashboard/allvehicles"
                 className="group flex items-center px-2 py-2 text-sm font-medium text-white rounded-md hover:bg-indigo-600"
               >
+                <FontAwesomeIcon icon={faCar} className="mr-2" />
                 Vehicles
               </Link>
               <Link
-                to="/dashboard/tickets"
+                to="/dashboard/tickets" 
                 className="group flex items-center px-2 py-2 text-sm font-medium text-white rounded-md hover:bg-indigo-600"
               >
+                <FontAwesomeIcon icon={faTicketAlt} className="mr-2" />  {/* Consider a more specific ticket icon if needed */}
                 Tickets
               </Link>
               <Link
                 to="/dashboard/about"
                 className="group flex items-center px-2 py-2 text-sm font-medium text-white rounded-md hover:bg-indigo-600"
               >
+                <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />  {/* Using faInfoCircle for About Us */}
                 About Us
+              </Link>
+              <Link
+                to="/logout"  
+                className="group flex items-center px-2 py-2 text-sm font-medium text-white rounded-md hover:bg-indigo-600"
+              >
+                <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
+                Logout
               </Link>
             </nav>
           </div>
@@ -54,5 +66,5 @@ export default function Admindashboard() {
         </div>
       </div>
     </div>
-  )
+  );
 }
