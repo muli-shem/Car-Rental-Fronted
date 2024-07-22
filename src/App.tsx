@@ -18,6 +18,12 @@ import VehicleTable from './Features/AdminVehicles/Vehiclespcis'
 import TicketTable from './Features/Tickets/Tickets'
 
 import BookingFormWrapper from './Features/BookCard/VehicleCard'
+import Logout from './pages/Logout'
+import SuccessPayment from './Features/BookCard/SuccessPayment'
+import FailedPayment from './Features/BookCard/FailedPayment'
+import PaymentsTable from './Features/Payments/PaymentsTable'
+
+
 
 
 function App() {
@@ -36,10 +42,15 @@ function App() {
       path: '/about',element:<About/>,
       errorElement:<Error/>
      },
+    //  {
+    //   path: '/questions',element:< FAQAndInfo/>,
+    //   errorElement:<Error/>
+    //  },
      {
        path: '/login', element:<Login/>,
        errorElement:<Error/>
      },
+
      {
       path: '/dashboard', element:<Dashboard/>,
       errorElement:<Error/>,
@@ -65,8 +76,13 @@ function App() {
      },
      {
       path:'/dashboard/tickets',element:<TicketTable/>
-    },{
+    }
+    ,{
       path:'/dashboard/bookform', element:<BookingFormWrapper/>,
+    },{
+      path:'/dashboard/succespayment', element:<SuccessPayment/>,
+    },{
+      path:'/dashboard/failedpayment', element:<FailedPayment/>,
     }
     ]
     },
@@ -83,6 +99,9 @@ function App() {
       {
         path:'/admindashboard/allvehicles', element:<VehicleTable/>,
       },
+      {
+        path:'/admindashboard/payments', element:<PaymentsTable/>,
+      }
    
     ]
     },
@@ -90,7 +109,10 @@ function App() {
       path: '/fleet', element:<ExploreFleet/>,
       errorElement:<Error/>
     },
-
+{
+  path: '/logout', element:<Logout/>,
+  errorElement:<Error/>
+}
     ])
   return (
     <RouterProvider router={router}/>

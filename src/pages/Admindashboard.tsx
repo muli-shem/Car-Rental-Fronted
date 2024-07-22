@@ -38,14 +38,21 @@ export default function Admindashboard() {
                 Vehicles
               </Link>
               <Link
-                to="/dashboard/tickets" 
+                to="/admindashboard/payments" 
+                className="group flex items-center px-2 py-2 text-sm font-medium text-white rounded-md hover:bg-indigo-600"
+              >
+                <FontAwesomeIcon icon={faTicketAlt} className="mr-2" />  {/* Consider a more specific ticket icon if needed */}
+                Payments
+              </Link>
+              <Link
+                to="/admindashboard/tickets" 
                 className="group flex items-center px-2 py-2 text-sm font-medium text-white rounded-md hover:bg-indigo-600"
               >
                 <FontAwesomeIcon icon={faTicketAlt} className="mr-2" />  {/* Consider a more specific ticket icon if needed */}
                 Tickets
               </Link>
               <Link
-                to="/dashboard/about"
+                to="/admindashboard/about"
                 className="group flex items-center px-2 py-2 text-sm font-medium text-white rounded-md hover:bg-indigo-600"
               >
                 <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />  {/* Using faInfoCircle for About Us */}

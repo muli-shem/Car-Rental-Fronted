@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useAddPaymentMutation, useAddBookingMutation } from '../BookCard/bookingsAPI';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe('pk_test_51PbLceDOtv5cLYqw6vU2qqqm6l8W7dMCkXQG0eXc3vSudVBQ7Xqb4EUel7NbptWYA4WrICHz5gqFtbVOefLZi1Uh00wOYUoU8L');
 
 type BookingFormProps = {
   onBookingSuccess: () => void;
 };
 
+type CheckoutResponse = {
+  sessionId: string;
+  checkoutUrl:string;
+};
 
-  
-  // other properties if any
-;
-
-const BookingForm = ({ }: BookingFormProps) => {
+const BookingForm = ({  }: BookingFormProps) => {
   const [bookingDate, setBookingDate] = useState<string>('');
   const [returnDate, setReturnDate] = useState<string>('');
   const [totalAmount, setTotalAmount] = useState<number>(0);
@@ -75,19 +78,28 @@ const BookingForm = ({ }: BookingFormProps) => {
 
   const handlePayment = async (amountToPay: number, bookingId: number) => {
     try {
+      const stripe = await stripePromise;
+      if (!stripe) {
+        throw new Error('Stripe failed to load');
+      }
+
       const paymentPayload = {
         booking_id: bookingId,
         amount: amountToPay,
-        currency: 'kes', // Make sure to include currency
-        transaction_id: 'sessionId', // Add appropriate transaction ID if needed
-        payment_method: 'Card', // Example payment method ID
-        payment_status: 'pending',
-        url: '',
+        currency: 'USD',
       };
 
       console.log('Payment Payload:', paymentPayload);
-      const checkoutResponse = await addPayment(paymentPayload).unwrap();
-      window.location.href = checkoutResponse.url;
+      const checkoutResponse: CheckoutResponse = await addPayment(paymentPayload).unwrap();
+
+      // Redirect to Stripe Checkout
+      const result = await stripe.redirectToCheckout({
+        sessionId: checkoutResponse.sessionId,
+      });
+
+      if (result.error) {
+        console.error('Error redirecting to checkout:', result.error.message);
+      }
     } catch (error) {
       console.error('Error creating checkout session:', error);
     }
@@ -117,7 +129,7 @@ const BookingForm = ({ }: BookingFormProps) => {
       </div>
       <div className="mb-4">
         <label className="block text-gray-700 font-bold mb-2">Total Amount</label>
-        <p className="w-full px-3 py-2 border rounded-lg bg-gray-100">{(totalAmount / 100).toFixed(2)} KES</p>
+        <p className="w-full px-3 py-2 border rounded-lg bg-gray-100">{(totalAmount / 100).toFixed(2)} USD</p>
       </div>
       <button 
         type="submit" 

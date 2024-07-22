@@ -11,6 +11,8 @@ export interface Booking {
   total_amount: number;
 }
 export interface Payments{
+  sessionId:string,
+  checkoutUrl:string,
   booking_id:number,
   amount:number,
   transaction_id: string,

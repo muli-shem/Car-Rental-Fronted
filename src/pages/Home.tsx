@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar'
 import Body from '../components/Body'
 // import { Container } from 'lucide-react'
 import ExploreFleet from '../Fleet/ExploreFleet'
+import FAQAndInfo from './Fqs'
 const Home = () => {
   return (
     <div>
@@ -13,7 +14,7 @@ const Home = () => {
       </Container> */}
        <Body/>
        <ExploreFleet/>
-      
+       <FAQAndInfo/>
        <Footer/>
     </div>
    

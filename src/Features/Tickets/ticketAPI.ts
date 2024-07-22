@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { LocalDomain } from '../../utils/utils';
 
 export interface TTicket {
   ticket_id: number;
@@ -13,7 +14,7 @@ export interface TTicket {
 export const ticketAPI = createApi({
   reducerPath: 'ticketAPI',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/api',
+    baseUrl:  LocalDomain,
     prepareHeaders: (headers,{getState}) => {
       const token = getState();
       if (token) {

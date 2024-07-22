@@ -1,6 +1,5 @@
-// EditUserModal.tsx
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { TUser } from './userAPI';
 
 interface EditUserModalProps {
@@ -12,6 +11,10 @@ interface EditUserModalProps {
 
 const EditUserModal: React.FC<EditUserModalProps> = ({ isOpen, closeModal, user, onUpdate }) => {
   const [formData, setFormData] = useState<TUser>(user);
+
+  useEffect(() => {
+    setFormData(user);
+  }, [user]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

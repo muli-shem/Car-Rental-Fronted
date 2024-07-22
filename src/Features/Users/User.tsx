@@ -1,15 +1,18 @@
 import { useState } from 'react';
-import { useGetUsersQuery, useDeleteUserMutation, useUpdateUserMutation, useDisableUserMutation } from './userAPI';
+import { useGetUsersQuery, useDeleteUserMutation, useUpdateUserMutation, useDisableUserMutation, useAddUserMutation } from './userAPI';
 import { Toaster, toast } from 'sonner';
 import { TUser } from './userAPI';
 import EditUserModal from './EditUserModal';
+import AddUserModal from './AddUserModal'; // Import the AddUserModal component
 
 const UserTable = () => {
   const { data: users, isLoading, isError } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
   const [updateUser] = useUpdateUserMutation();
   const [disableUser] = useDisableUserMutation();
+  const [addUser] = useAddUserMutation();
   const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isAddModalOpen, setAddModalOpen] = useState(false); // State for AddUserModal
   const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
 
   const handleDelete = async (user_id: number) => {
@@ -30,12 +33,36 @@ const UserTable = () => {
     }
   };
 
-  const handleUpdate = async (user: TUser) => {
+  const handleUpdate = async (updatedUser: TUser) => {
+    const { user_id, ...patch } = updatedUser;
+  
+    if (!user_id) {
+      toast.error('User ID is missing');
+      return;
+    }
+  
+    // Ensure all required fields are present
+    if (!patch.email || !patch.contact_phone || !patch.address || !patch.role || !patch.Full_name) {
+      toast.error('All required fields must be filled');
+      return;
+    }
+  
     try {
-      await updateUser(user).unwrap();
+      await updateUser({ user_id, ...patch }).unwrap();
       toast.success('User updated successfully');
     } catch (error) {
       toast.error('Error updating user');
+      console.error('Update user error:', error);
+    }
+  };
+
+  const handleAddUser = async (newUser: Omit<TUser, 'user_id'>) => {
+    try {
+      await addUser(newUser).unwrap();
+      toast.success('User added successfully');
+      setAddModalOpen(false); // Close the modal after adding
+    } catch (error) {
+      toast.error('Error adding user');
     }
   };
 
@@ -47,6 +74,14 @@ const UserTable = () => {
   const closeEditModal = () => {
     setEditModalOpen(false);
     setSelectedUser(null);
+  };
+
+  const openAddModal = () => {
+    setAddModalOpen(true);
+  };
+
+  const closeAddModal = () => {
+    setAddModalOpen(false);
   };
 
   return (
@@ -63,6 +98,12 @@ const UserTable = () => {
       />
       <div className="overflow-x-auto text-base-content bg-gray-100 rounded-lg p-4">
         <h1 className="text-xl my-4">Users Data</h1>
+        <button
+          className="btn btn-primary mb-4"
+          onClick={openAddModal}
+        >
+          Add New User
+        </button>
         <table className="table table-xs">
           <thead className="bg-gray-300">
             <tr>
@@ -88,7 +129,7 @@ const UserTable = () => {
               users &&
               users.map((user: TUser) => (
                 <tr key={user.user_id} className="hover:bg-gray-200">
-                  <th>{user.user_id}</th>
+                  <td>{user.user_id}</td>
                   <td>{user.Full_name}</td>
                   <td>{user.email}</td>
                   <td>{user.contact_phone}</td>
@@ -133,6 +174,11 @@ const UserTable = () => {
           onUpdate={handleUpdate}
         />
       )}
+      <AddUserModal
+        isOpen={isAddModalOpen}
+        closeModal={closeAddModal}
+        onAddUser={handleAddUser}
+      />
     </>
   );
 };
