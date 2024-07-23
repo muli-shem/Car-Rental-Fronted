@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { LocalDomain } from "../../utils/utils";
 
 export interface TBookings {
   booking_id: number;
@@ -11,7 +12,7 @@ export interface TBookings {
 
 export const bookingAPI = createApi({
   reducerPath: "bookingAPI",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl:LocalDomain}),
   tagTypes: ['Bookings'],
   endpoints: (builder) => ({
     getBookings: builder.query<TBookings[], void>({

@@ -4,6 +4,7 @@ import axios from "axios";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
+
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -13,7 +14,7 @@ export default function Login() {
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/api/login", {
+      const response = await axios.post("https://car-renting-project.onrender.com/api/login",{
         email,
         password,
       });

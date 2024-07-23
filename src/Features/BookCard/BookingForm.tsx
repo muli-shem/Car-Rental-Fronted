@@ -8,9 +8,11 @@ type BookingFormProps = {
   onBookingSuccess: () => void;
 };
 
+
 type CheckoutResponse = {
   sessionId: string;
   checkoutUrl:string;
+ 
 };
 
 const BookingForm = ({  }: BookingFormProps) => {

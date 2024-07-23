@@ -1,5 +1,6 @@
 // vehicleAPI.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { LocalDomain } from '../../utils/utils';
 
 export interface VehicleSpecifications {
   vehicleSpec_id: number;
@@ -25,7 +26,7 @@ export interface Vehicle {
 export const allvehiclespcisAPI = createApi({
   reducerPath: 'allvehiclespcisAPI',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8080/api',
+    baseUrl: LocalDomain,
     prepareHeaders: (headers, { getState }) => {
       const state = getState() as any;
       const token =state?.auth?.token;

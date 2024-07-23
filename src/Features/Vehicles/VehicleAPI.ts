@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { LocalDomain } from '../../utils/utils';
 
 // Define the types for vehicle specifications
 export interface TVehicleSpecifications {
@@ -25,7 +26,7 @@ export interface TVehicle {
 // Define the API slice
 export const VehicleAPI = createApi({
   reducerPath: 'VehicleAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8080/api' }), // Adjust base URL as per your backend setup
+  baseQuery: fetchBaseQuery({ baseUrl: LocalDomain }), // Adjust base URL as per your backend setup
   endpoints: (builder) => ({
     getAllVehicles: builder.query<TVehicle[], void>({
       query: () => '/VehiclesVehicleSpecifications', // Endpoint path on your backend to fetch all vehicles
