@@ -100,7 +100,7 @@ const VehicleList = () => {
           const vehicleImage = modelImageMap[vehicle.VehicleSpecifications.model] || defaultImage;
 
           return (
-            <div key={vehicle.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div key={vehicle.vehicle_id } className="bg-white rounded-lg shadow-md overflow-hidden">
               <img
                 src={vehicleImage}
                 alt={vehicle.VehicleSpecifications.model}
@@ -114,7 +114,7 @@ const VehicleList = () => {
                   <li>Model: {vehicle.VehicleSpecifications.model}</li>
                   <li>Rental Rate: ${vehicle.rental_rate}</li>
                   <li>Seating Capacity: {vehicle.VehicleSpecifications.seating_capacity}</li>
-                  {viewMoreVehicleId === vehicle.id && (
+                  {viewMoreVehicleId === vehicle.vehicle_id && (
                     <>
                       <li>Availability: {vehicle.availability ? 'Available' : 'Unavailable'}</li>
                       <li>Manufacturer: {vehicle.VehicleSpecifications.manufacturer}</li>

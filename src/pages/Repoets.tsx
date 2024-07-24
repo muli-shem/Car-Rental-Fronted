@@ -20,11 +20,11 @@ const Reports: React.FC = () => {
   const fetchData = async () => {
     try {
       const responses = await Promise.all([
-        axios.get('http://localhost:8080/api/Payments'),
-        axios.get('http://localhost:8080/api/Bookings'),
-        axios.get('http://localhost:8080/api/Users'),
-        axios.get('http://localhost:8080/api/Locations'),
-        axios.get('http://localhost:8080/api/Tickets'),
+        axios.get('https://car-renting-project.onrender.com/api/Payments'),
+        axios.get('https://car-renting-project.onrender.com/api/Bookings'),
+        axios.get('https://car-renting-project.onrender.com/api/Users'),
+        axios.get('https://car-renting-project.onrender.com/api/Locations'),
+        axios.get('https://car-renting-project.onrender.com/api/Tickets'),
       ]);
 
       setPayments(responses[0].data);
