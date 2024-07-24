@@ -45,11 +45,18 @@ export default function Admindashboard() {
                 Payments
               </Link>
               <Link
-                to="/admindashboard/tickets" 
+                to="/admindashboard/alltickets" 
                 className="group flex items-center px-2 py-2 text-sm font-medium text-white rounded-md hover:bg-indigo-600"
               >
                 <FontAwesomeIcon icon={faTicketAlt} className="mr-2" />  {/* Consider a more specific ticket icon if needed */}
                 Tickets
+              </Link>
+              <Link
+                to="/admindashboard/reports" 
+                className="group flex items-center px-2 py-2 text-sm font-medium text-white rounded-md hover:bg-indigo-600"
+              >
+                <FontAwesomeIcon icon={faTicketAlt} className="mr-2" />  {/* Consider a more specific ticket icon if needed */}
+                Reports
               </Link>
               <Link
                 to="/admindashboard/about"

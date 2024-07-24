@@ -22,6 +22,9 @@ import Logout from './pages/Logout'
 import SuccessPayment from './Features/BookCard/SuccessPayment'
 import FailedPayment from './Features/BookCard/FailedPayment'
 import PaymentsTable from './Features/Payments/PaymentsTable'
+import AllTicketsTable from './Features/Tickets/AllTicketsTable'
+import AllBookingsTable from './Features/Booking/AllBookingsTable'
+import Reports from './pages/Repoets'
 
 
 
@@ -101,6 +104,15 @@ function App() {
       },
       {
         path:'/admindashboard/payments', element:<PaymentsTable/>,
+      }, {
+        path:'/admindashboard/alltickets',element:<AllTicketsTable/>
+      },{
+        path:'/admindashboard/allbookings', element:<AllBookingsTable/>
+       },
+       {
+        path:'/admindashboard/reports', element:<Reports/>
+       },{
+        path: '/admindashboard/about', element:<About/>,
       }
    
     ]

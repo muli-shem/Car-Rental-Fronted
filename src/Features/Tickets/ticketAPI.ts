@@ -35,6 +35,13 @@ export const ticketAPI = createApi({
     getTicketById: builder.query<TTicket[], number>({
       query: (ticket_id) => `Tickets/${ticket_id}`,
     }),
+    getAllTickets: builder.query<TTicket[], void>({
+      query: () => 'Tickets',
+      providesTags: (result) =>
+        result
+          ? [...result.map(({ ticket_id }) => ({ type: 'Tickets', id: ticket_id } as const)), { type: 'Tickets', id: 'ALL_LIST' }]
+          : [{ type: 'Tickets', id: 'ALL_LIST' }],
+    }),
     createTicket: builder.mutation<TTicket, Partial<TTicket>>({
       query: (newTicket) => ({
         url: 'Tickets',

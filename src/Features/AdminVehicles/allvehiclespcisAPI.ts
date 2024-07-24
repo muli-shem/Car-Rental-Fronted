@@ -50,10 +50,18 @@ export const allvehiclespcisAPI = createApi({
             ]
           : [{ type: 'Vehicles', id: 'LIST' }],
     }),
+    createVehicle: builder.mutation<Vehicle, Partial<Vehicle>>({
+      query: (newVehicle) => ({
+        url: 'Vehicles',
+        method: 'POST',
+        body: newVehicle,
+      }),
+      invalidatesTags: [{ type: 'Vehicles', id: 'LIST' }],
+    }),
   
     updateVehicle: builder.mutation<Vehicle, Partial<Vehicle>>({
       query: ({ vehicle_id, ...patch }) => ({
-        url: `vehicles/${vehicle_id}`,
+        url: `Vehicles/${vehicle_id}`,
         method: 'PUT',
         body: patch,
       }),
@@ -61,7 +69,7 @@ export const allvehiclespcisAPI = createApi({
     }),
     deleteVehicle: builder.mutation<{ success: boolean; vehicle_id: number }, number>({
       query: (vehicle_id) => ({
-        url: `vehicles/${vehicle_id}`,
+        url: `Vehicles/${vehicle_id}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Vehicles', id: 'LIST' }],
@@ -73,8 +81,10 @@ export const {
   useGetVehiclesQuery,
   useUpdateVehicleMutation,
   useDeleteVehicleMutation,
+  useCreateVehicleMutation
 } = allvehiclespcisAPI as{
   useGetVehiclesQuery:()=>ReturnType< typeof allvehiclespcisAPI.endpoints.getVehicles.useQuery>
     useUpdateVehicleMutation:()=>ReturnType<typeof allvehiclespcisAPI.endpoints.updateVehicle.useMutation>
     useDeleteVehicleMutation:()=>ReturnType<typeof allvehiclespcisAPI.endpoints.deleteVehicle.useMutation>
-}
+    useCreateVehicleMutation:()=>ReturnType<typeof allvehiclespcisAPI.endpoints.createVehicle.useMutation>
+  }

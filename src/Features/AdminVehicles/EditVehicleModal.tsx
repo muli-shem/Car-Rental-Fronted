@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState, useEffect } from 'react';
-import { Vehicle } from './allvehiclespcisAPI';
+import { Vehicle, VehicleSpecifications } from './allvehiclespcisAPI';
 
 interface EditVehicleModalProps {
   isOpen: boolean;
@@ -10,14 +10,37 @@ interface EditVehicleModalProps {
 }
 
 const EditVehicleModal: React.FC<EditVehicleModalProps> = ({ isOpen, closeModal, vehicle, onUpdate }) => {
-  const [formData, setFormData] = useState<Partial<Vehicle>>({ ...vehicle });
+  const [formData, setFormData] = useState<Partial<Vehicle>>({
+    ...vehicle,
+    VehicleSpecifications: vehicle.VehicleSpecifications || {} // Initialize if undefined
+  });
 
   useEffect(() => {
-    setFormData(vehicle); // Update form data when vehicle prop changes
+    setFormData({
+      ...vehicle,
+      VehicleSpecifications: vehicle.VehicleSpecifications || {} // Initialize if undefined
+    }); // Update form data when vehicle prop changes
   }, [vehicle]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name.startsWith('VehicleSpecifications.')) {
+      const specKey = name.replace('VehicleSpecifications.', '') as keyof VehicleSpecifications;
+
+      setFormData(prev => ({
+        ...prev,
+        VehicleSpecifications: {
+          ...(prev.VehicleSpecifications as VehicleSpecifications), // Type assertion here
+          [specKey]: value
+        }
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
   };
 
   const handleSubmit = () => {
@@ -67,7 +90,7 @@ const EditVehicleModal: React.FC<EditVehicleModalProps> = ({ isOpen, closeModal,
                       />
                       <input
                         type="text"
-                        name="manufacturer"
+                        name="VehicleSpecifications.manufacturer"
                         value={formData.VehicleSpecifications?.manufacturer || ''}
                         onChange={handleChange}
                         placeholder="Manufacturer"
@@ -75,7 +98,7 @@ const EditVehicleModal: React.FC<EditVehicleModalProps> = ({ isOpen, closeModal,
                       />
                       <input
                         type="text"
-                        name="model"
+                        name="VehicleSpecifications.model"
                         value={formData.VehicleSpecifications?.model || ''}
                         onChange={handleChange}
                         placeholder="Model"
@@ -83,7 +106,7 @@ const EditVehicleModal: React.FC<EditVehicleModalProps> = ({ isOpen, closeModal,
                       />
                       <input
                         type="number"
-                        name="year"
+                        name="VehicleSpecifications.year"
                         value={formData.VehicleSpecifications?.year || ''}
                         onChange={handleChange}
                         placeholder="Year"
@@ -91,7 +114,7 @@ const EditVehicleModal: React.FC<EditVehicleModalProps> = ({ isOpen, closeModal,
                       />
                       <input
                         type="text"
-                        name="fuel_type"
+                        name="VehicleSpecifications.fuel_type"
                         value={formData.VehicleSpecifications?.fuel_type || ''}
                         onChange={handleChange}
                         placeholder="Fuel Type"
@@ -99,7 +122,7 @@ const EditVehicleModal: React.FC<EditVehicleModalProps> = ({ isOpen, closeModal,
                       />
                       <input
                         type="text"
-                        name="engine_capacity"
+                        name="VehicleSpecifications.engine_capacity"
                         value={formData.VehicleSpecifications?.engine_capacity || ''}
                         onChange={handleChange}
                         placeholder="Engine Capacity"
@@ -107,7 +130,7 @@ const EditVehicleModal: React.FC<EditVehicleModalProps> = ({ isOpen, closeModal,
                       />
                       <input
                         type="text"
-                        name="transmission"
+                        name="VehicleSpecifications.transmission"
                         value={formData.VehicleSpecifications?.transmission || ''}
                         onChange={handleChange}
                         placeholder="Transmission"
@@ -115,7 +138,7 @@ const EditVehicleModal: React.FC<EditVehicleModalProps> = ({ isOpen, closeModal,
                       />
                       <input
                         type="number"
-                        name="seating_capacity"
+                        name="VehicleSpecifications.seating_capacity"
                         value={formData.VehicleSpecifications?.seating_capacity || ''}
                         onChange={handleChange}
                         placeholder="Seating Capacity"
@@ -123,7 +146,7 @@ const EditVehicleModal: React.FC<EditVehicleModalProps> = ({ isOpen, closeModal,
                       />
                       <input
                         type="text"
-                        name="color"
+                        name="VehicleSpecifications.color"
                         value={formData.VehicleSpecifications?.color || ''}
                         onChange={handleChange}
                         placeholder="Color"
@@ -131,7 +154,7 @@ const EditVehicleModal: React.FC<EditVehicleModalProps> = ({ isOpen, closeModal,
                       />
                       <input
                         type="text"
-                        name="features"
+                        name="VehicleSpecifications.features"
                         value={formData.VehicleSpecifications?.features || ''}
                         onChange={handleChange}
                         placeholder="Features"

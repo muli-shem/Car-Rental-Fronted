@@ -1,7 +1,33 @@
 import { useState } from 'react';
-import { useGetAllVehiclesQuery } from "./VehicleAPI";
-import { Link } from "react-router-dom";
-import image from "../../assets/Images/download (2).jpeg";
+import { useGetAllVehiclesQuery } from './VehicleAPI';
+import { Link } from 'react-router-dom';
+import defaultImage from '../../assets/Images/download (2).jpeg';
+import Honda from '../../assets/Images/Honda 1.jpeg';
+import Hondas from '../../assets/Images/Honda 2.jpeg';
+import Vitz from '../../assets/Images/Vitz.jpeg';
+import Corola from '../../assets/Images/Corola.jpeg';
+import Audi from '../../assets/Images/Audi.jpeg';
+import V8 from "../../assets/Images/V8.jpg"
+import Ford from "../../assets/Images/Ford.jpeg"
+import chev from '../../assets/Images/chev.jpeg'
+import fortuner from '../../assets/Images/Fortuner toyota.jpeg'
+
+
+
+const modelImageMap: Record<string, string> = {
+  'Honda': Honda,
+  'Hondas': Hondas,
+  'Vitz': Vitz,
+  'Corola': Corola,
+  'Audi': Audi,
+  'Other': defaultImage,
+  'V8':V8,
+  'Ford': Ford,
+  'Chevrolet': chev,
+  'Fortuner': fortuner,
+
+
+};
 
 const VehicleList = () => {
   const { data: vehicles, error, isLoading } = useGetAllVehiclesQuery();
@@ -70,49 +96,53 @@ const VehicleList = () => {
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {filteredVehicles?.map((vehicle: any) => (
-          <div key={vehicle.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-            <img
-              src={`${image}`}
-              alt={""}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-4">
-              <p className="text-gray-700 mb-4">
-                {vehicle.VehicleSpecifications.description}
-              </p>
-              <ul className="text-sm text-gray-600 mb-4">
-                <li>Model: {vehicle.VehicleSpecifications.model}</li>
-                <li>Rental Rate: ${vehicle.rental_rate}</li>
-                <li>Seating Capacity: {vehicle.VehicleSpecifications.seating_capacity}</li>
-                {viewMoreVehicleId === vehicle.vehicle_id && (
-                  <>
-                    <li>Availability: {vehicle.availability ? "Available" : "Unavailable"}</li>
-                    <li>Manufacturer: {vehicle.VehicleSpecifications.manufacturer}</li>
-                    <li>Year: {vehicle.VehicleSpecifications.year}</li>
-                    <li>Fuel Type: {vehicle.VehicleSpecifications.fuel_type}</li>
-                    <li>Transmission: {vehicle.VehicleSpecifications.transmission}</li>
-                    <li>Color: {vehicle.VehicleSpecifications.color}</li>
-                    <li>Features: {vehicle.VehicleSpecifications.features}</li>
-                  </>
-                )}
-              </ul>
-              <button
-                onClick={() => setViewMoreVehicleId(viewMoreVehicleId === vehicle.vehicle_id ? null : vehicle.vehicle_id)}
-                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 mb-4"
-              >
-                {viewMoreVehicleId === vehicle.vehicle_id ? 'View Less' : 'View More Details'}
-              </button>
-              <Link
-                to="/dashboard/bookform"
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
-                onClick={() => handleBookClick(vehicle.vehicle_id,vehicle.rental_rate)}
-              >
-                BOOK
-              </Link>
+        {filteredVehicles?.map((vehicle: any) => {
+          const vehicleImage = modelImageMap[vehicle.VehicleSpecifications.model] || defaultImage;
+
+          return (
+            <div key={vehicle.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+              <img
+                src={vehicleImage}
+                alt={vehicle.VehicleSpecifications.model}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <p className="text-gray-700 mb-4">
+                  {vehicle.VehicleSpecifications.description}
+                </p>
+                <ul className="text-sm text-gray-600 mb-4">
+                  <li>Model: {vehicle.VehicleSpecifications.model}</li>
+                  <li>Rental Rate: ${vehicle.rental_rate}</li>
+                  <li>Seating Capacity: {vehicle.VehicleSpecifications.seating_capacity}</li>
+                  {viewMoreVehicleId === vehicle.id && (
+                    <>
+                      <li>Availability: {vehicle.availability ? 'Available' : 'Unavailable'}</li>
+                      <li>Manufacturer: {vehicle.VehicleSpecifications.manufacturer}</li>
+                      <li>Year: {vehicle.VehicleSpecifications.year}</li>
+                      <li>Fuel Type: {vehicle.VehicleSpecifications.fuel_type}</li>
+                      <li>Transmission: {vehicle.VehicleSpecifications.transmission}</li>
+                      <li>Color: {vehicle.VehicleSpecifications.color}</li>
+                      <li>Features: {vehicle.VehicleSpecifications.features}</li>
+                    </>
+                  )}
+                </ul>
+                <button
+                  onClick={() => setViewMoreVehicleId(viewMoreVehicleId === vehicle.vehicle_id? null : vehicle.vehicle_id)}
+                  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 mb-4"
+                >
+                  {viewMoreVehicleId === vehicle.vehicle_id ? 'View Less' : 'View More Details'}
+                </button>
+                <Link
+                  to="/dashboard/bookform"
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+                  onClick={() => handleBookClick(vehicle.vehicle_id, vehicle.rental_rate)}
+                >
+                  BOOK
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
