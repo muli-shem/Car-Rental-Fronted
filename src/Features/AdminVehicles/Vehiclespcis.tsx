@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useGetVehiclesQuery, useUpdateVehicleMutation, useDeleteVehicleMutation } from './allvehiclespcisAPI';
+import { useGetVehiclesQuery, useUpdateVehicleMutation, useDeleteVehicleMutation, useCreateVehicleMutation } from './allvehiclespcisAPI';
 import EditVehicleModal from './EditVehicleModal';
+import CreateVehicleModal from './AddVehicleModal'; // Import the CreateVehicleModal component
 import { Toaster, toast } from 'sonner';
 import { Vehicle } from './allvehiclespcisAPI';
 
@@ -32,8 +33,10 @@ const VehicleTable = () => {
   const { data: vehicles, isLoading, isError, refetch } = useGetVehiclesQuery();
   const [updateVehicle] = useUpdateVehicleMutation();
   const [deleteVehicle] = useDeleteVehicleMutation();
+  const [createVehicle] = useCreateVehicleMutation(); // Create a mutation for creating vehicles
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false); // State for the create modal
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -69,6 +72,17 @@ const VehicleTable = () => {
     }
   };
 
+  const handleCreate = async (newVehicle: Partial<Vehicle>) => {
+    try {
+      await createVehicle(newVehicle).unwrap();
+      toast.success('Vehicle created successfully');
+      setIsCreateModalOpen(false); // Close modal on success
+    } catch (error) {
+      toast.error('Error creating vehicle');
+      console.error('Create error:', error); // Debugging
+    }
+  };
+
   return (
     <>
       <Toaster
@@ -83,6 +97,12 @@ const VehicleTable = () => {
       />
       <div className="bg-gray-200 rounded-lg p-4 text-base-content">
         <h1 className="text-xl my-4">Vehicles Data</h1>
+        <button
+          className="btn btn-primary mb-4"
+          onClick={() => setIsCreateModalOpen(true)} // Open the create modal
+        >
+          Add New Vehicle
+        </button>
         {isLoading ? (
           <div>Loading...</div>
         ) : isError ? (
@@ -140,6 +160,11 @@ const VehicleTable = () => {
           onUpdate={handleUpdate}
         />
       )}
+      <CreateVehicleModal
+        isOpen={isCreateModalOpen}
+        closeModal={() => setIsCreateModalOpen(false)}
+        onCreate={handleCreate}
+      />
     </>
   );
 };
