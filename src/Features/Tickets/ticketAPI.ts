@@ -50,13 +50,17 @@ export const ticketAPI = createApi({
       }),
       invalidatesTags: ['Tickets'],
     }),
-    updateTicket: builder.mutation<TTicket, Partial<TTicket & {ticket_id:number}>>({
-      query: ({ ticket_id, ...patch }) => ({
-        url: `Tickets/${ticket_id}`,
+    updateTicket: builder.mutation<TTicket, Partial<TTicket> & { ticket_id: number }>({
+      query: (ticket) => ({
+        url: `Tickets/${ticket.ticket_id}`,
         method: 'PUT',
-        body: patch,
+        body: {
+          subject: ticket.subject,
+          description: ticket.description,
+          status: ticket.status
+        },
       }),
-      invalidatesTags:['Tickets'],
+      invalidatesTags: ['Tickets'],
     }),
     deleteTicket: builder.mutation({
       query: (ticket_id) => ({
