@@ -24,6 +24,7 @@ export default function Register() {
         contact_phone: contactPhone,
         address,
         password,
+        role:"user"
       });
 
       if (response.status === 201) {
